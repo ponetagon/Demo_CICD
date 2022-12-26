@@ -2,9 +2,11 @@ name: CICD
 
 on:
   push:
-    tags: [ "v1" ]
+    tags: 
+      - '*'
   pull_request:
-    tags: [ "v1" ]
+    tags: 
+      - '*'
 
 jobs:
   Build:
