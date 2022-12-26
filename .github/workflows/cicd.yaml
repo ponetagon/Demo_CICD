@@ -24,6 +24,7 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
         addLatest: true
+        githubOrg: /refs/tags/v1.0
 
     - uses: Consensys/kubernetes-action@master
       name: Deploy on Kubernetes
