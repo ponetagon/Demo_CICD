@@ -1,0 +1,32 @@
+name: CICD
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  Build:
+    environment: Demo
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      name: Check out code
+
+    - uses: mr-smithers-excellent/docker-build-push@v3
+      name: Build & push Docker image
+      with:
+        image: ${{ secrets.DOCKERHUB_USERNAME }}/cicd-nginx
+        tags: v1, latest
+        registry: docker.io
+        dockerfile: Dockerfile
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+    - uses: Consensys/kubernetes-action@master
+      name: Deploy on Kubernetes
+      env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+      with:
+          args: apply -f demo-nginx.yml
