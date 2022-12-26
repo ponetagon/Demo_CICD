@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: cicd-nginx:v1
+        image: ponetagon/cicd-nginx:v1
         ports:
         - containerPort: 80
 #      imagePullSecrets:
